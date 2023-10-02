@@ -47,23 +47,20 @@ pipeline {
             }
         }
 
-        stage('Sonar Analysis') {
-            environment {
-                scannerHome = tool "${SONARSCANNER}"
-            }
+
+        stage('SonarQube Scan') {
             steps {
-                withSonarQubeEnv("${SONARSERVER}") {
-                    sh """${scannerHome}/bin/sonar-scanner -X \
-                    -Dsonar.projectKey=beng \
-                    -Dsonar.projectName=beng \
-                    -Dsonar.projectVersion=1.0 \
-                    -Dsonar.sources=src/ \
-                    -Dsonar.java.binaries=target/test-classes/com/example/co2/ \
-                    -Dsonar.junit.reportPaths=target/surefire-reports/ \
-                    -Dsonar.jacoco.reportPaths=target/jacoco.exec \
-                    -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml"""
+                script {
+                    // Ensure the 'target' directory exists
+                    dir('target') {
+                        // Set the working directory to the 'target' directory
+                        def scannerHome = tool name: "${SONARSCANNER}", type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                        withSonarQubeEnv("${SONARSERVER}") {
+                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectBaseDir=. -Dsonar.sources=. -Dsonar.projectKey=ben"
+                        }
+                    }
                 }
             }
-        }   
+        } 
     }
 }
