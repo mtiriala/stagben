@@ -46,11 +46,6 @@ pipeline {
                 sh 'mvn checkstyle:checkstyle'
             }
         }
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
 
         stage('Sonar Analysis') {
             environment {
