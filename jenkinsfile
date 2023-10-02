@@ -8,7 +8,7 @@ pipeline {
         NEXUS_REPOSITORY = "vprofile-release"
         NEXUS_REPOGRP_ID = "vprofile-grp-repo"
         NEXUS_CREDENTIAL_ID = "nexuslogin"
-        ARTIFACT_NAME = "co2-${env.BUILD_ID}.jar" // Name of the JAR artifact
+        ARTIFACT_NAME = "co2-0.0.1-SNAPSHOT.jar" // Name of the JAR artifact
     }
 
     stages {
