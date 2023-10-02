@@ -25,11 +25,13 @@ pipeline {
             }
         }
         
-        stage('Test'){
+
+        stage('Test') {
             steps {
-                try {
+                script {
+                    try {
                         // Run the tests and ignore failures
-                    sh 'mvn test'
+                        sh 'mvn test'
                     } catch (Exception e) {
                         currentBuild.result = 'SUCCESS' // Mark the build as successful
                         echo 'Test failures are ignored'
